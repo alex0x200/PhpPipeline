@@ -1,0 +1,14 @@
+{
+    "name": "ansakharov/pipeline",
+    "description": "Pipeline pattern realization on PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Noone",
+            "email": "alexandrsakharoff@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {}
+}
