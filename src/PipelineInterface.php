@@ -17,7 +17,7 @@ interface PipelineInterface
      * @param callable ...$operation
      * @return PipelineInterface
      */
-    public function appendPipes(callable ...$operation): PipelineInterface;
+    public function append(callable ...$operation): PipelineInterface;
 
     /**
      * @param mixed $payload

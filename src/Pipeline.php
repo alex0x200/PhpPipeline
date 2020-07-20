@@ -26,7 +26,7 @@ final class Pipeline implements PipelineInterface
      * @param callable ...$pipes
      * @return PipelineInterface
      */
-    public function appendPipes(...$pipes): PipelineInterface
+    public function append(...$pipes): PipelineInterface
     {
         return new self($this->processor, ...array_merge($this->pipes, $pipes));
     }
