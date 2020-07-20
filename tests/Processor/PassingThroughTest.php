@@ -9,12 +9,12 @@ use PHPUnit\Framework\TestCase;
 final class PassingThroughTest extends TestCase
 {
     /**
-     * @dataProvider ProviderForFirstApplicable
+     * @dataProvider ProviderForPassingThrough
      * @param array<callable> $pipes
      * @param mixed $payload
      * @param mixed $expected
      */
-    public function testFirstApplicable(array $pipes, $payload, $expected): void
+    public function testPassingThrough(array $pipes, $payload, $expected): void
     {
         $processor = new PassingThrough();
         $pipeline = new Pipeline($processor, ...$pipes);
@@ -25,7 +25,7 @@ final class PassingThroughTest extends TestCase
     /**
      * @return array<string,array<string, array<int, (Closure(int): bool)|(Closure(int): int)>|int|string|true>>
      */
-    public function ProviderForFirstApplicable(): array
+    public function ProviderForPassingThrough(): array
     {
         return [
             'emptyPipeline' => [
