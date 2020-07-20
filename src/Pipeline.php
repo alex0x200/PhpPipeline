@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace alex0x200\Pipeline;
+namespace PhpPipeline;
 
-use alex0x200\Pipeline\Processor\ProcessorInterface;
+use PhpPipeline\Processor\ProcessorInterface;
 
 final class Pipeline implements PipelineInterface
 {

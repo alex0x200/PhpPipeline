@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "alex0x200\\Pipeline\\": "src/"
+            "PhpPipeline\\": "src/"
         }
     }
 }

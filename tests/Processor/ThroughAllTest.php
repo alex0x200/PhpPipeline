@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace alex0x200\Test\Pipeline\Processor;
+namespace PhpPipeline\Test\Processor;
 
-use alex0x200\Pipeline\Pipeline;
-use alex0x200\Pipeline\Processor\ThroughAll;
+use PhpPipeline\Pipeline;
+use PhpPipeline\Processor\ThroughAll;
 use PHPUnit\Framework\TestCase;
 
 final class ThroughAllTest extends TestCase

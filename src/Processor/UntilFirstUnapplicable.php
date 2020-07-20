@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace alex0x200\Pipeline\Processor;
+namespace PhpPipeline\Processor;
 
 final class UntilFirstUnapplicable implements ProcessorInterface
 {
