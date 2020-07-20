@@ -26,7 +26,7 @@ final class Pipeline implements PipelineInterface
      * @param callable ...$pipes
      * @return PipelineInterface
      */
-    public function append(...$pipes): PipelineInterface
+    public function append(callable ...$pipes): PipelineInterface
     {
         return new self($this->processor, ...array_merge($this->pipes, $pipes));
     }
@@ -43,7 +43,7 @@ final class Pipeline implements PipelineInterface
     /**
      * This workaround allows you add to objects into pipeline, __invoke() func
      * method will be called like just like callable.
-     * @param $payload
+     * @param mixed $payload
      * @return mixed|void
      */
     public function __invoke($payload)

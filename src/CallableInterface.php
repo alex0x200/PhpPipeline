@@ -5,7 +5,7 @@ namespace PhpPipeline;
 interface CallableInterface
 {
     /**
-     * @param $payload
+     * @param mixed $payload
      * @return mixed
      */
     public function __invoke($payload);
