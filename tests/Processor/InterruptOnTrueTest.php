@@ -12,10 +12,10 @@ final class InterruptOnTrueTest extends TestCase
      * @dataProvider ProviderForInterruptOnTrue
      * @param callable $checkFunc
      * @param array<callable> $pipes
-     * @param mixed $payload
-     * @param mixed $expected
+     * @param array<int> $payload
+     * @param array<int> $expected
      */
-    public function testInterruptOnTrue(callable $checkFunc, array $pipes, $payload, $expected): void
+    public function testInterruptOnTrue(callable $checkFunc, array $pipes, array $payload, array $expected): void
     {
         $processor = new InterruptOnTrue($checkFunc);
         $pipeline = new Pipeline($processor, ...$pipes);
