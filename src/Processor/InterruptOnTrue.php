@@ -2,7 +2,7 @@
 
 namespace PhpPipeline\Processor;
 
-final class UntilFirstUnapplicable implements ProcessorInterface
+final class InterruptOnTrue implements ProcessorInterface
 {
     /**
      * @var callable
@@ -28,7 +28,7 @@ final class UntilFirstUnapplicable implements ProcessorInterface
         foreach ($steps as $step) {
             $payload = $step($payload);
 
-            if ($check($payload) !== true) {
+            if ($check($payload) === true) {
                 break;
             }
         }
