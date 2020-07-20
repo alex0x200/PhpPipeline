@@ -2,7 +2,7 @@
 
 namespace PhpPipeline\Processor;
 
-final class ThroughAll implements ProcessorInterface
+final class PassingThrough implements ProcessorInterface
 {
     /**
      * @param mixed $payload

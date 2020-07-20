@@ -3,10 +3,10 @@
 namespace PhpPipeline\Test\Processor;
 
 use PhpPipeline\Pipeline;
-use PhpPipeline\Processor\ThroughAll;
+use PhpPipeline\Processor\PassingThrough;
 use PHPUnit\Framework\TestCase;
 
-final class ThroughAllTest extends TestCase
+final class PassingThroughTest extends TestCase
 {
     /**
      * @dataProvider ProviderForFirstApplicable
@@ -16,7 +16,7 @@ final class ThroughAllTest extends TestCase
      */
     public function testFirstApplicable(array $pipes, $payload, $expected): void
     {
-        $processor = new ThroughAll();
+        $processor = new PassingThrough();
         $pipeline = new Pipeline($processor, ...$pipes);
 
         self::assertEquals($expected, $pipeline->process($payload));
