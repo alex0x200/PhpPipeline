@@ -4,7 +4,7 @@ namespace PhpPipeline;
 
 use PhpPipeline\Processor\ProcessorInterface;
 
-interface PipelineInterface
+interface PipelineInterface extends CallableInterface
 {
     /**
      * @param ProcessorInterface $processInterface

@@ -39,4 +39,15 @@ final class Pipeline implements PipelineInterface
     {
         return $this->processor->process($payload, ...$this->pipes);
     }
+
+    /**
+     * This workaround allows you add to objects into pipeline, __invoke() func
+     * method will be called like just like callable.
+     * @param $payload
+     * @return mixed|void
+     */
+    public function __invoke($payload)
+    {
+        $this->process($payload);
+    }
 }
