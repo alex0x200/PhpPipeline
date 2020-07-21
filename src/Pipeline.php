@@ -10,7 +10,7 @@ final class Pipeline implements PipelineInterface
     /**
      * @var callable[]
      */
-    public array $pipes;
+    private array $pipes;
 
     /**
      * @param ProcessorInterface $processor
@@ -35,7 +35,7 @@ final class Pipeline implements PipelineInterface
      * @param mixed $payload
      * @return mixed|null
      */
-    public function process($payload)
+    public function send($payload)
     {
         return $this->processor->process($payload, ...$this->pipes);
     }
@@ -48,6 +48,6 @@ final class Pipeline implements PipelineInterface
      */
     public function __invoke($payload)
     {
-        $this->process($payload);
+        $this->send($payload);
     }
 }

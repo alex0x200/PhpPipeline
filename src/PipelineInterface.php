@@ -23,5 +23,5 @@ interface PipelineInterface extends CallableInterface
      * @param mixed $payload
      * @return mixed
      */
-    public function process($payload);
+    public function send($payload);
 }
