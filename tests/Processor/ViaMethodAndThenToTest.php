@@ -1,11 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace PhpPipeline\Test\Processor;
+namespace Test\Processor;
 
 use PhpPipeline\Pipeline;
-use PhpPipeline\Processor\Via;
 use PhpPipeline\Processor\ViaMethodAndThenTo;
-use PhpPipeline\Test\Fake\Greet;
+use Test\Fake\Greet;
 use PHPUnit\Framework\TestCase;
 
 final class ViaMethodAndThenToTest extends TestCase

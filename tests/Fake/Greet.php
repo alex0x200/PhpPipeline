@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace PhpPipeline\Test\Fake;
+namespace Test\Fake;
 
 class Greet
 {
