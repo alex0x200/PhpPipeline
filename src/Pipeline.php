@@ -33,11 +33,11 @@ final class Pipeline implements PipelineInterface
 
     /**
      * @param mixed $payload
-     * @return mixed|null
+     * @return PipelineResultInterface
      */
-    public function send($payload)
+    public function send($payload): PipelineResultInterface
     {
-        return $this->processor->process($payload, ...$this->pipes);
+        return new PipelineResult($this->processor->process($payload, ...$this->pipes));
     }
 
     /**

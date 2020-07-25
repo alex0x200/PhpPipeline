@@ -21,7 +21,7 @@ final class InterruptOnFalseTest extends TestCase
         $processor = new InterruptOnFalse($checkFunc);
         $pipeline = new Pipeline($processor, ...$pipes);
 
-        self::assertEquals($expected, $pipeline->send($payload));
+        self::assertEquals($expected, $pipeline->send($payload)->thenReturn());
     }
 
     /**

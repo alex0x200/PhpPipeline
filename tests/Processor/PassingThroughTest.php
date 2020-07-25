@@ -19,7 +19,7 @@ final class PassingThroughTest extends TestCase
         $processor = new PassingThrough();
         $pipeline = new Pipeline($processor, ...$pipes);
 
-        self::assertEquals($expected, $pipeline->send($payload));
+        self::assertEquals($expected, $pipeline->send($payload)->thenReturn());
     }
 
     /**

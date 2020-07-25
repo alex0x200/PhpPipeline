@@ -19,7 +19,7 @@ final class ViaTest extends TestCase
         $processor = new Via('ping');
         $pipeline = new Pipeline($processor, ...$pipes);
 
-        self::assertEquals($expected, $pipeline->send($payload));
+        self::assertEquals($expected, $pipeline->send($payload)->thenReturn());
     }
 
     /**

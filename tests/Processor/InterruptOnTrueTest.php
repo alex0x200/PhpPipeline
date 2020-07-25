@@ -20,7 +20,7 @@ final class InterruptOnTrueTest extends TestCase
         $processor = new InterruptOnTrue($checkFunc);
         $pipeline = new Pipeline($processor, ...$pipes);
 
-        self::assertEquals($expected, $pipeline->send($payload));
+        self::assertEquals($expected, $pipeline->send($payload)->thenReturn());
     }
 
     /**
