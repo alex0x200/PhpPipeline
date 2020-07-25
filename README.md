@@ -1,2 +1,2 @@
-# pipeline
+# PhpPipeline
 Pipeline realization for PHP 
