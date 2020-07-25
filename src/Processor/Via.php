@@ -51,7 +51,6 @@ final class Via implements ProcessorInterface
                             return $carry(call_user_func_array($methodCallable, $params));
                         }
                         // if $pipe hasn't `via`, but can be invoked - let's do this fallback
-                        //    if (method_exists($pipe, self::FALLBACK_OBJ_METHOD)) {
                         if (is_callable($pipe)) {
                             return $carry($pipe(...$params));
                         }
