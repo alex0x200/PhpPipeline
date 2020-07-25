@@ -12,14 +12,19 @@ final class Pipeline implements PipelineInterface
      */
     private array $pipes;
 
+    private PipelineResultFactoryInterface $resultFactory;
+
     /**
      * @param ProcessorInterface $processor
      * @param callable ...$pipes
      */
-    public function __construct(ProcessorInterface $processor, callable ...$pipes)
-    {
+    public function __construct(
+        ProcessorInterface $processor,
+        callable ...$pipes
+    ) {
         $this->processor = $processor;
         $this->pipes = $pipes;
+        $this->resultFactory = new PipelineResultFactory();
     }
 
     /**
@@ -37,7 +42,7 @@ final class Pipeline implements PipelineInterface
      */
     public function send($payload): PipelineResultInterface
     {
-        return new PipelineResult($this->processor->process($payload, ...$this->pipes));
+        return $this->resultFactory->createResult($this->processor->process($payload, ...$this->pipes));
     }
 
     /**

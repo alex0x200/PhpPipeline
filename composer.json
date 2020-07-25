@@ -19,5 +19,11 @@
             "PhpPipeline\\": "src/",
             "Test\\": "tests/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpPipeline\\": "src/",
+            "Test\\": "tests/"
+        }
     }
 }

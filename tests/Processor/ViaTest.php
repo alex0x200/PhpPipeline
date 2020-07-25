@@ -2,21 +2,25 @@
 
 namespace Test\Processor;
 
+use Fake;
 use PhpPipeline\Pipeline;
 use PhpPipeline\Processor\Via;
 use PHPUnit\Framework\TestCase;
+use Test\Fake\Math;
+use Test\Fake\MathSecond;
 
 final class ViaTest extends TestCase
 {
     /**
      * @dataProvider ProviderForVia
      * @param array<callable> $pipes
+     * @param string $via
      * @param mixed $payload
      * @param mixed $expected
      */
-    public function testViaSuccess(array $pipes, $payload, $expected): void
+    public function testViaSuccess(array $pipes, string $via, $payload, $expected): void
     {
-        $processor = new Via('ping');
+        $processor = new Via($via);
         $pipeline = new Pipeline($processor, ...$pipes);
 
         self::assertEquals($expected, $pipeline->send($payload)->thenReturn());
@@ -30,39 +34,12 @@ final class ViaTest extends TestCase
         return [
             'multiplePipes' => [
                 'pipes' => [
-                    new class() {
-                        public  function ping(int $payload): int
-                        {
-                            return $payload * 2;
-                        }
-                        public function __invoke(int $payload): int
-                        {
-                            return $payload;
-                        }
-                    },
-                    new class() {
-                        public  function ping(int $payload): int
-                        {
-                            return $payload * 3;
-                        }
-                        public function __invoke(int $payload): int
-                        {
-                            return $payload;
-                        }
-                    },
-                    new class() {
-                        public  function ping(int $payload): int
-                        {
-                            return $payload * 4;
-                        }
-                        public function __invoke(int $payload): int
-                        {
-                            return $payload;
-                        }
-                    }
+                    new Math(),
+                    new MathSecond()
                 ],
+                'via' => 'multiplication',
                 'payload' => 1488,
-                'resultAfterPipes' => 1488 * 2 * 3 * 4,
+                'resultAfterPipes' => 1488 * 2 * 3,
             ],
         ];
     }

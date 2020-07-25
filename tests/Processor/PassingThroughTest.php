@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Test\Processor;
+namespace Test;
 
 use PhpPipeline\Pipeline;
 use PhpPipeline\Processor\PassingThrough;
