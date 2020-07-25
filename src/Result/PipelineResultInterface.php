@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace PhpPipeline;
+namespace PhpPipeline\Result;
 
 interface PipelineResultInterface
 {

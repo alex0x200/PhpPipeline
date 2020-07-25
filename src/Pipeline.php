@@ -3,6 +3,8 @@
 namespace PhpPipeline;
 
 use PhpPipeline\Processor\ProcessorInterface;
+use PhpPipeline\Result\PipelineResultInterface;
+use PhpPipeline\Result\PipelineResultFactory;
 
 final class Pipeline implements PipelineInterface
 {
@@ -12,7 +14,7 @@ final class Pipeline implements PipelineInterface
      */
     private array $pipes;
 
-    private PipelineResultFactoryInterface $resultFactory;
+    private PipelineResultFactory $resultFactory;
 
     /**
      * @param ProcessorInterface $processor
