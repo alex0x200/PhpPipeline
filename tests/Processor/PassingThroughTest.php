@@ -3,6 +3,7 @@
 namespace Test;
 
 use PhpPipeline\Pipeline;
+use PhpPipeline\PipelineConfig;
 use PhpPipeline\Processor\PassingThrough;
 use PHPUnit\Framework\TestCase;
 
@@ -16,10 +17,9 @@ final class PassingThroughTest extends TestCase
      */
     public function testPassingThrough(array $pipes, $payload, $expected): void
     {
-        $processor = new PassingThrough();
-        $pipeline = new Pipeline($processor, ...$pipes);
+        $pipeline = new Pipeline(new PipelineConfig(), ...$pipes);
 
-        self::assertEquals($expected, $pipeline->send($payload)->thenReturn());
+        self::assertEquals($expected, $pipeline->resultOf($payload)->thenReturn());
     }
 
     /**

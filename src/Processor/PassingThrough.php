@@ -9,7 +9,7 @@ final class PassingThrough implements ProcessorInterface
      * @param callable ...$steps
      * @return mixed
      */
-    public function process($payload, callable ...$steps)
+    public function passThroughPipes($payload, callable ...$steps)
     {
         foreach ($steps as $step) {
             $payload = $step($payload);

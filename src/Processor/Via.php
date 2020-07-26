@@ -24,7 +24,7 @@ final class Via implements ProcessorInterface
      * @param callable ...$steps
      * @return mixed
      */
-    public function process($payload, callable ...$steps)
+    public function passThroughPipes($payload, callable ...$steps)
     {
         $reducedPipes = array_reduce(array_reverse($steps), $this->carry(), function($value) { return $value;});
         return $reducedPipes($payload);
