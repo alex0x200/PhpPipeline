@@ -2,7 +2,7 @@
 
 ## What is it?
 
-**PhpPipeline** is realisation of same pattern.
+**PhpPipeline** is immutable realisation of same pattern.
 
 ## How it works?
 Simpliest usage - create new pipeline with `PassingThroughProcessor` (pass through all your pipes) and pipes:
