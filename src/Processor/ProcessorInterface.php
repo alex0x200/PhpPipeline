@@ -9,5 +9,5 @@ interface ProcessorInterface
      * @param callable ...$steps
      * @return mixed
      */
-    public function process($payload, callable ...$steps);
+    public function passThroughPipes($payload, callable ...$steps);
 }

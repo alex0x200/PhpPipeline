@@ -1,10 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace PhpPipeline\Test\Processor;
+namespace Test\Processor;
 
 use PhpPipeline\Pipeline;
+use PhpPipeline\PipelineConfig;
 use PhpPipeline\Processor\InterruptOnFalse;
 use PhpPipeline\Processor\InterruptOnTrue;
+use PhpPipeline\Result\ByDefaultFactory;
 use PHPUnit\Framework\TestCase;
 
 final class InterruptOnFalseTest extends TestCase
@@ -18,10 +20,15 @@ final class InterruptOnFalseTest extends TestCase
      */
     public function testInterruptOnFalse(callable $checkFunc, array $pipes, array $payload, array $expected): void
     {
-        $processor = new InterruptOnFalse($checkFunc);
-        $pipeline = new Pipeline($processor, ...$pipes);
+        $pipeline = new Pipeline(
+            new PipelineConfig(
+                new InterruptOnFalse($checkFunc),
+                new ByDefaultFactory()
+            ),
+            ...$pipes
+        );
 
-        self::assertEquals($expected, $pipeline->process($payload));
+        self::assertEquals($expected, $pipeline->resultOf($payload)->thenReturn());
     }
 
     /**
@@ -31,7 +38,7 @@ final class InterruptOnFalseTest extends TestCase
     {
         return [
             'interrupted' => [
-                'check' => function(array $payload): bool {
+                'check' => function (array $payload): bool {
                     return count($payload) > 4;
                 },
                 'pipes' => [
@@ -46,7 +53,7 @@ final class InterruptOnFalseTest extends TestCase
                 'resultAfterPipes' => [20, 30, 40, 50],
             ],
             'passingThroughAllPipes' => [
-                'check' => function(array $payload): bool {
+                'check' => function (array $payload): bool {
                     return count($payload) > 1;
                 },
                 'pipes' => [

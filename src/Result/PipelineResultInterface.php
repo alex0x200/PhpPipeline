@@ -1,0 +1,17 @@
+<?php declare(strict_types = 1);
+
+namespace PhpPipeline\Result;
+
+interface PipelineResultInterface
+{
+    /**
+     * @param \Closure $then
+     * @return mixed
+     */
+    public function then(\Closure $then);
+
+    /**
+     * @return mixed
+     */
+    public function thenReturn();
+}

@@ -3,6 +3,8 @@
 namespace PhpPipeline;
 
 use PhpPipeline\Processor\ProcessorInterface;
+use PhpPipeline\Result\PipelineResultInterface;
+use PhpPipeline\Result\ByDefaultFactory;
 
 final class Pipeline implements PipelineInterface
 {
@@ -10,15 +12,19 @@ final class Pipeline implements PipelineInterface
     /**
      * @var callable[]
      */
-    public array $pipes;
+    private array $pipes;
+
+    private ConfigInterface $config;
 
     /**
-     * @param ProcessorInterface $processor
+     * @param ConfigInterface $config
      * @param callable ...$pipes
      */
-    public function __construct(ProcessorInterface $processor, callable ...$pipes)
-    {
-        $this->processor = $processor;
+    public function __construct(
+        ConfigInterface $config,
+        callable ...$pipes
+    ) {
+        $this->config = $config;
         $this->pipes = $pipes;
     }
 
@@ -28,16 +34,16 @@ final class Pipeline implements PipelineInterface
      */
     public function append(callable ...$pipes): PipelineInterface
     {
-        return new self($this->processor, ...array_merge($this->pipes, $pipes));
+        return new self($this->config, ...array_merge($this->pipes, $pipes));
     }
 
     /**
      * @param mixed $payload
-     * @return mixed|null
+     * @return PipelineResultInterface
      */
-    public function process($payload)
+    public function resultOf($payload): PipelineResultInterface
     {
-        return $this->processor->process($payload, ...$this->pipes);
+        return $this->config->process($payload, ...$this->pipes);
     }
 
     /**
@@ -48,6 +54,6 @@ final class Pipeline implements PipelineInterface
      */
     public function __invoke($payload)
     {
-        $this->process($payload);
+        $this->resultOf($payload);
     }
 }

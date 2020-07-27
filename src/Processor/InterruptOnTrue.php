@@ -22,7 +22,7 @@ final class InterruptOnTrue implements ProcessorInterface
      * @param callable ...$steps
      * @return mixed
      */
-    public function process($payload, callable ...$steps)
+    public function passThroughPipes($payload, callable ...$steps)
     {
         $check = $this->check;
         foreach ($steps as $step) {
