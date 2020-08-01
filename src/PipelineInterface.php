@@ -7,10 +7,10 @@ use PhpPipeline\Processor\ProcessorInterface;
 interface PipelineInterface extends CallableInterface
 {
     /**
-     * @param ConfigInterface $config
+     * @param ProcessorInterface $processor
      * @param callable ...$steps
      */
-    public function __construct(ConfigInterface $config, callable ...$steps);
+    public function __construct(ProcessorInterface $processor, callable ...$steps);
 
     /**
      * Append pipes to pipeline
@@ -23,5 +23,5 @@ interface PipelineInterface extends CallableInterface
      * @param mixed $payload
      * @return mixed
      */
-    public function resultOf($payload);
+    public function process($payload);
 }

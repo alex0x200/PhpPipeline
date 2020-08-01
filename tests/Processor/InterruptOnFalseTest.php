@@ -3,10 +3,7 @@
 namespace Test\Processor;
 
 use PhpPipeline\Pipeline;
-use PhpPipeline\PipelineConfig;
 use PhpPipeline\Processor\InterruptOnFalse;
-use PhpPipeline\Processor\InterruptOnTrue;
-use PhpPipeline\Result\ByDefaultFactory;
 use PHPUnit\Framework\TestCase;
 
 final class InterruptOnFalseTest extends TestCase
@@ -20,15 +17,9 @@ final class InterruptOnFalseTest extends TestCase
      */
     public function testInterruptOnFalse(callable $checkFunc, array $pipes, array $payload, array $expected): void
     {
-        $pipeline = new Pipeline(
-            new PipelineConfig(
-                new InterruptOnFalse($checkFunc),
-                new ByDefaultFactory()
-            ),
-            ...$pipes
-        );
+        $pipeline = new Pipeline(new InterruptOnFalse($checkFunc), ...$pipes);
 
-        self::assertEquals($expected, $pipeline->resultOf($payload)->thenReturn());
+        self::assertEquals($expected, $pipeline->process($payload));
     }
 
     /**

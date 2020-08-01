@@ -3,7 +3,6 @@
 namespace Test\Processor;
 
 use PhpPipeline\Pipeline;
-use PhpPipeline\PipelineConfig;
 use PhpPipeline\Processor\InterruptOnTrue;
 use PHPUnit\Framework\TestCase;
 
@@ -18,10 +17,9 @@ final class InterruptOnTrueTest extends TestCase
      */
     public function testInterruptOnTrue(callable $checkFunc, array $pipes, array $payload, array $expected): void
     {
-        $config = new PipelineConfig(new InterruptOnTrue($checkFunc));
-        $pipeline = new Pipeline($config, ...$pipes);
+        $pipeline = new Pipeline(new InterruptOnTrue($checkFunc), ...$pipes);
 
-        self::assertEquals($expected, $pipeline->resultOf($payload)->thenReturn());
+        self::assertEquals($expected, $pipeline->process($payload));
     }
 
     /**

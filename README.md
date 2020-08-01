@@ -14,10 +14,10 @@ $pipes = [
     new class() { public function __invoke(int $payload): int { return $payload * 4; } }
 ];
 
-$pipeline = new Pipeline(new PipelineConfig(), ...$pipes);
+$pipeline = new Pipeline(new PassingThrough(), ...$pipes);
 $payload = 100;
 
-$result = $pipeline->resultOf($payload)->thenReturn();
+$result = $pipeline->process($payload);
 ```
 It is legal to pass objects as pipes, every object `must` implements `__invoke()` method.
 
@@ -29,23 +29,12 @@ $pipes = [
     fn(int $payload): int => $payload * 3,
 ];
 
-$pipeline = new Pipeline(new PipelineConfig(), ...$pipes);
+$pipeline = new Pipeline(new PassingThrough(), ...$pipes);
 $pipe = (fn(int $payload): int => $payload * 2);
 $pipeline = $pipeline->append($pipe);
 $payload = 100;
 
-$result = $pipeline->resultOf($payload)->thenReturn();
-```
-
-
-## Process result
-Result can be processed inside pipeline:
-```php
-$pipeline = new Pipeline(new PipelineConfig(), (fn(int $payload): int => $payload * 2));
-$handleFunc = fn($payload) => ['success' => true, 'result' => [0 => $payload]];
-$payload = 100;
-
-$result = $pipeline->resultOf($payload)->then($handleFunc);
+$result = $pipeline->process($payload);
 ```
 
 ## Via
@@ -64,11 +53,10 @@ $pipes = [
     fn(int $payload): int => $payload * 10
 ];
 
-$config = new PipelineConfig(new Via('multiplicate'));
-$pipeline = new Pipeline($config, ...$pipes);
+$pipeline = new Pipeline(new Via('multiplicate'), ...$pipes);
 $payload = 100;
 
-$result = $pipeline->resultOf($payload)->thenReturn();
+$result = $pipeline->process($payload);
 ```
 
 ### Processors
