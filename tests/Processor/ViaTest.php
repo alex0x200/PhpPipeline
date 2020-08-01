@@ -2,9 +2,7 @@
 
 namespace Test\Processor;
 
-use Fake;
 use PhpPipeline\Pipeline;
-use PhpPipeline\PipelineConfig;
 use PhpPipeline\Processor\Via;
 use PHPUnit\Framework\TestCase;
 use Test\Fake\Math;
@@ -21,10 +19,9 @@ final class ViaTest extends TestCase
      */
     public function testViaSuccess(array $pipes, string $via, $payload, $expected): void
     {
-        $config = new PipelineConfig(new Via($via));
-        $pipeline = new Pipeline($config, ...$pipes);
+        $pipeline = new Pipeline(new Via($via), ...$pipes);
 
-        self::assertEquals($expected, $pipeline->resultOf($payload)->thenReturn());
+        self::assertEquals($expected, $pipeline->process($payload));
     }
 
     /**

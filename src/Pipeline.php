@@ -3,8 +3,6 @@
 namespace PhpPipeline;
 
 use PhpPipeline\Processor\ProcessorInterface;
-use PhpPipeline\Result\PipelineResultInterface;
-use PhpPipeline\Result\ByDefaultFactory;
 
 final class Pipeline implements PipelineInterface
 {
@@ -14,17 +12,15 @@ final class Pipeline implements PipelineInterface
      */
     private array $pipes;
 
-    private ConfigInterface $config;
-
     /**
-     * @param ConfigInterface $config
+     * @param ProcessorInterface $processor
      * @param callable ...$pipes
      */
     public function __construct(
-        ConfigInterface $config,
+        ProcessorInterface $processor,
         callable ...$pipes
     ) {
-        $this->config = $config;
+        $this->processor = $processor;
         $this->pipes = $pipes;
     }
 
@@ -34,26 +30,24 @@ final class Pipeline implements PipelineInterface
      */
     public function append(callable ...$pipes): PipelineInterface
     {
-        return new self($this->config, ...array_merge($this->pipes, $pipes));
+        return new self($this->processor, ...array_merge($this->pipes, $pipes));
     }
 
     /**
      * @param mixed $payload
-     * @return PipelineResultInterface
+     * @return mixed
      */
-    public function resultOf($payload): PipelineResultInterface
+    public function process($payload)
     {
-        return $this->config->process($payload, ...$this->pipes);
+        return $this->processor->passThroughPipes($payload, ...$this->pipes);
     }
 
     /**
-     * This workaround allows you add to objects into pipeline, __invoke() func
-     * method will be called like just like callable.
      * @param mixed $payload
-     * @return mixed|void
+     * @return mixed
      */
     public function __invoke($payload)
     {
-        $this->resultOf($payload);
+        return $this->process($payload);
     }
 }
