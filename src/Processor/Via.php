@@ -42,6 +42,7 @@ final class Via implements ProcessorInterface
 
     /**
      * @return \Closure
+     * @throws PipelineException
      */
     private function carry(): \Closure
     {
