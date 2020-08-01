@@ -47,42 +47,38 @@ final class Via implements ProcessorInterface
     {
         return function ($carry, $pipe) {
             return function ($payload) use ($carry, $pipe) {
-                try {
-                    // if $pipe is anonymous func just call it
-                    if ($pipe instanceof \Closure) {
-                        return $carry($pipe($payload, $carry));
-                    }
-                    if (is_object($pipe)) {
-                        $params = [$payload];
+                // if $pipe is anonymous func just call it
+                if ($pipe instanceof \Closure) {
+                    return $carry($pipe($payload, $carry));
+                }
+                if (is_object($pipe)) {
+                    $params = [$payload];
 
-                        $methodCallable = [$pipe, $this->methodName];
-                        // if $pipe has `via` method call it - go through the flow
-                        if (is_callable($methodCallable)) {
-                            return $carry(call_user_func_array($methodCallable, $params));
-                        }
-                        // if $pipe hasn't `via`, but can be invoked - let's do this fallback
-                        if (is_callable($pipe)) {
-                            return $carry($pipe(...$params));
-                        }
-
-                        // wrong object passed to pipeline
-                        throw new PipelineException(
-                            sprintf(
-                                "Pipe '%s' hasn't '%s' method and can't be invoked",
-                                get_class($pipe),
-                                $this->methodName
-                            )
-                        );
+                    $methodCallable = [$pipe, $this->methodName];
+                    // if $pipe has `via` method call it - go through the flow
+                    if (is_callable($methodCallable)) {
+                        return $carry(call_user_func_array($methodCallable, $params));
                     }
+                    // if $pipe hasn't `via`, but can be invoked - let's do this fallback
+                    if (is_callable($pipe)) {
+                        return $carry($pipe(...$params));
+                    }
+
+                    // wrong object passed to pipeline
                     throw new PipelineException(
                         sprintf(
-                            'Pipe must be \Closure or object with method \'%s\' or \'__invoke()\'',
+                            "Pipe '%s' hasn't '%s' method and can't be invoked",
+                            get_class($pipe),
                             $this->methodName
                         )
                     );
-                } catch (\Exception $e) {
-                    throw new PipelineException("Carry pipe crashed on: " . $e->getMessage(), $e->getCode(), $e);
                 }
+                throw new PipelineException(
+                    sprintf(
+                        'Pipe must be \Closure or object with method \'%s\' or \'__invoke()\'',
+                        $this->methodName
+                    )
+                );
             };
         };
     }
