@@ -23,11 +23,21 @@ final class Via implements ProcessorInterface
      * @param mixed $payload
      * @param callable ...$steps
      * @return mixed
+     * @throws PipelineException
      */
     public function passThroughPipes($payload, callable ...$steps)
     {
-        $reducedPipes = array_reduce(array_reverse($steps), $this->carry(), function($value) { return $value;});
-        return $reducedPipes($payload);
+        $reducedPipes = array_reduce(array_reverse($steps), $this->carry(), fn($value) => $value);
+
+        try {
+            return $reducedPipes($payload);
+        } catch (\Throwable $e) {
+            throw new PipelineException(
+                sprintf("Failed while pipes were processing: %s", $e->getMessage()),
+                $e->getCode(),
+                $e
+            );
+        }
     }
 
     /**
