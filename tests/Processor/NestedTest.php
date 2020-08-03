@@ -4,51 +4,56 @@ namespace Test\Processor;
 
 use PhpPipeline\Pipeline;
 use PhpPipeline\PipelineException;
-use PhpPipeline\Processor\Via;
+use PhpPipeline\Processor\Nested;
 use PHPUnit\Framework\TestCase;
 use Test\Fake\Math;
 use Test\Fake\MathSecond;
 
-final class ViaTest extends TestCase
+final class NestedTest extends TestCase
 {
     /**
      * @dataProvider ProviderForVia
      * @param array<callable> $pipes
-     * @param string $via
      * @param mixed $payload
      * @param mixed $expected
      */
-    public function testViaSuccess(array $pipes, string $via, $payload, $expected): void
+    public function testViaSuccess(array $pipes, $payload, $expected): void
     {
-        $pipeline = new Pipeline(new Via($via), ...$pipes);
+        $pipeline = new Pipeline(new Nested(), ...$pipes);
 
         self::assertEquals($expected, $pipeline->process($payload));
     }
 
     /**
-     * @return array<string,array<string, array<int, (Closure(int): bool)|(Closure(int): int)>|int|string|true>>
+     * @return array<string, array<string, array<int, (Closure(int):float)|Test\Fake\Math|Test\Fake\MathSecond>|float|int>>
      */
     public function ProviderForVia(): array
     {
         return [
+            'noPipes' => [
+                'pipes' => [],
+                'payload' => 1488,
+                'result' => 1488,
+            ],
             'multiplePipes' => [
                 'pipes' => [
                     new Math(),
-                    new MathSecond()
+                    new MathSecond(),
+                    fn(int $payload): float => $payload * 1.91
                 ],
-                'via' => 'multiplication',
                 'payload' => 1488,
-                'resultAfterPipes' => 1488 * 2 * 3,
+                'resultAfterPipes' => 1488 * 2 * 3 * 1.91,
             ],
         ];
     }
 
     /**
      * @return void
+     * @throws PipelineException
      */
     public function testViaClosure(): void
     {
-        $processor = new Via('mega_method');
+        $processor = new Nested();
         $payload = 100;
         $mul = 10;
 
@@ -62,7 +67,7 @@ final class ViaTest extends TestCase
      */
     public function testViaMethodNotExist(): void
     {
-        $processor = new Via('not_existing_method');
+        $processor = new Nested();
         $payload = 100;
         $pipe = new class() {
             public function __invoke(int $payload): int
@@ -82,23 +87,14 @@ final class ViaTest extends TestCase
     public function testViaError(): void
     {
         $this->expectException(PipelineException::class);
-        $processor = new Via('someMethod');
+        $processor = new Nested();
         $payload = 100;
         $pipe = new class() {
             /**
              * @param array<int> $payload
              * @return array<int>
              */
-            public function someMethod(array $payload): array
-            {
-                return $payload;
-            }
-
-            /**
-             * @param int $payload
-             * @return int
-             */
-            public function __invoke(int $payload): int
+            public function __invoke(array $payload): array
             {
                 return $payload;
             }

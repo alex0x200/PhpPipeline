@@ -2,7 +2,7 @@
 
 namespace PhpPipeline\Processor;
 
-final class InterruptOnTrue implements ProcessorInterface
+class InterruptOnTrue implements ProcessorInterface
 {
     /**
      * @var callable

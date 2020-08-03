@@ -4,13 +4,12 @@ namespace Test\Fake;
 
 class MathSecond
 {
-    public function multiplication(int $payload): int
-    {
-        return $payload * 3;
-    }
-
+    /**
+     * @param int $payload
+     * @return int
+     */
     public function __invoke(int $payload): int
     {
-        return $payload;
+        return $payload * 3;
     }
 }
