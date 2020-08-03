@@ -7,7 +7,7 @@ use PhpPipeline\PipelineException;
 /**
  * Executes method on stack of pipes, __invoke()|\Closure() if there is no such method
  */
-final class Via implements ProcessorInterface
+class Via implements ProcessorInterface
 {
     private string $methodName;
 
