@@ -1,5 +1,5 @@
 {
-    "name": "alex0x200/pipeline",
+    "name": "alex0x200/PhpPipeline",
     "description": "Pipeline pattern realization on PHP",
     "type": "library",
     "license": "MIT",
