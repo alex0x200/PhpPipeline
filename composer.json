@@ -5,12 +5,15 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Noone",
+            "name": "Alexandr Sakharov Noone",
             "email": "alexandrsakharoff@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">= 7.4"
+    },
     "require-dev": {
+        "php": ">= 7.4",
         "phpstan/phpstan": "^0.12.32",
         "phpunit/phpunit": "^9.2"
     },
